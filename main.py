@@ -100,11 +100,12 @@ model = genai.GenerativeModel(
 async def atender_mensaje(update: Update, context: ContextTypes.DEFAULT_TYPE):
     texto_usuario = update.message.text
     chat = model.start_chat(enable_automatic_function_calling=True)
-    
+
     try:
-        response = chat.send_message(texto_usuario)
+        response = await chat.send_message_async(texto_usuario)
         await update.message.reply_text(response.text)
     except Exception as e:
+        print(f"❌ ERROR DETALLADO EN GEMINI/SUPABASE: {e}")
         logging.error(f"Error al procesar mensaje: {e}")
         await update.message.reply_text("Lo siento, ha ocurrido un error procesando tu solicitud.")
 
