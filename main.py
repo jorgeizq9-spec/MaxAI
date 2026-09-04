@@ -86,7 +86,7 @@ herramientas = [
 
 # Configuración del modelo Gemini
 model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
+    model_name="gemini-2.5-flash",
     tools=herramientas,
     system_instruction=(
         "Eres JARVIS, un asistente personal inteligente y eficiente. "
