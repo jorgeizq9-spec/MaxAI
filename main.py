@@ -1,4 +1,21 @@
 import os
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+class DummyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"JARVIS Bot Running")
+
+def run_health_check_server():
+    port = int(os.environ.get("PORT", 8080))
+    server = HTTPServer(("0.0.0.0", port), DummyHandler)
+    server.serve_forever()
+
+# Iniciar servidor en segundo plano para engañar a Render
+threading.Thread(target=run_health_check_server, daemon=True).start()
+import os
 import json
 import logging
 from telegram import Update
